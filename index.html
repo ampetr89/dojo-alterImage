@@ -3,9 +3,11 @@
 <head>
 	<title>alter|Image</title>
 	<meta name="alterimage" content="">
+	<link rel="icon" href="icon.png">
 	<script type="text/javascript"
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 	</script>
+
 	<link rel="stylesheet" href="style.css">
 	<script type="text/javascript">
 
@@ -39,7 +41,7 @@
 			}
 			$(this).hide();
 			$(this).attr('src', getSrc(npanels, change, num));
-			$(this).fadeIn(1000);
+			$(this).fadeIn(400);
 			$(this).attr('which', change);
 		}, function(){})
 
