@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>alter|Image</title>
+	<meta name="alterimage" content="">
+	<script type="text/javascript"
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	</script>
+	<link rel="stylesheet" href="style.css">
+	<script type="text/javascript">
+
+	function getSrc(npanels, which, num){
+		var src = './reds/split'+npanels+'/'+which+'/'+which+' [www.imagesplitter.net]-'+num+'-0.jpeg';
+		console.log(src);
+		return(src);
+	};
+	$(document).ready(function(){
+
+		// create a section for each panel and populate with the first image
+		var totalHeight = 450;
+		var npanels = 20;
+		var imgHeight = totalHeight/npanels;
+		for(var i=0; i<npanels; i++){
+			sec = 'sec' + i;
+			img = getSrc(npanels, "a", i)
+			$('#imgHolder').append('<section id="'+sec+'"></section>');
+			$('#'+sec).append('<img src="'+img+'" num="'+i+'" which="a">');
+			$('#'+sec).css('height', imgHeight);
+			$('#'+sec + ' > img').css('height', imgHeight);
+		}
+
+		$('img').hover(function(){
+			which = $(this).attr('which');
+			num = $(this).attr('num');
+			if(which=='a'){
+				change = 'b';
+			}else{
+				change = 'a';
+			}
+			$(this).hide();
+			$(this).attr('src', getSrc(npanels, change, num));
+			$(this).fadeIn(1000);
+			$(this).attr('which', change);
+		}, function(){})
+
+		$('button').hover(
+			function(){
+				$(this).css('outline', '1px white solid')
+			},
+			function(){
+				$(this).css('outline', '1px black solid')
+			}
+		);
+
+		$('button').click(function(){
+			$('img').fadeOut(1000,
+				function(){ // do after animation completes
+					for(var i=0;i<npanels;i++){
+						// TODO make them reappear in random order
+						console.log('resetting b',i);
+						$("img[num="+i+"]").attr('src',getSrc(npanels,"a",i));
+					}
+					$("img[which='b']").attr('which',"a");
+				});
+			
+			$('img').fadeIn(1500);
+		})
+	});
+
+	</script>
+</head>
+<body>
+	<header></header>
+	<main>
+		<div id="imgHolder"></div> <!-- will contain the image-->
+	</main>
+	<footer>
+		<button>Restart</button>
+	</footer>
+</body>
+</html>
